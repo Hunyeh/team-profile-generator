@@ -5,7 +5,7 @@ test('test properties of Engineer', () => {
     expect(engineer.name).toBe('Fran');
     expect(engineer.id).toBe(345);
     expect(engineer.email).toBe('fran@mail.com');
-    expect(engineer.github).toBe('franny345')
+    expect(engineer.github).toBe('franny345');
 });
 
 test('test the getMethods of Engineer', () => {
@@ -14,5 +14,5 @@ test('test the getMethods of Engineer', () => {
     expect(engineer.getId()).toBe(345);
     expect(engineer.getEmail()).toBe('fran@mail.com');
     expect(engineer.getRole()).toBe('Engineer');
-    expect(engineer.getGithub()).toBe('franny345')
+    expect(engineer.getGithub()).toBe('franny345');
 });

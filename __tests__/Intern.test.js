@@ -5,7 +5,7 @@ test('test properties of Intern', () => {
     expect(intern.name).toBe('Derek');
     expect(intern.id).toBe(789);
     expect(intern.email).toBe('derek@mail.com');
-    expect(intern.school).toBe('Rutgers')
+    expect(intern.school).toBe('Rutgers');
 });
 
 test('test the getMethods of Intern', () => {
@@ -14,5 +14,5 @@ test('test the getMethods of Intern', () => {
     expect(intern.getId()).toBe(789);
     expect(intern.getEmail()).toBe('derek@mail.com');
     expect(intern.getRole()).toBe('Intern');
-    expect(intern.getSchool()).toBe('Rutgers')
+    expect(intern.getSchool()).toBe('Rutgers');
 });
