@@ -7,7 +7,7 @@ const promptRole = () => {
             type: 'list',
             name: 'role',
             message: "Select the role you'd like to add?",
-            choices: ['Manager', 'Engineer', 'Intern']
+            choices: ['Manager', 'Engineer', 'Intern', 'none']
         }
     ])
 };
@@ -31,39 +31,70 @@ const Arr = [
 ];
 
 const promptManager = () => {
-    return inquirer.prompt([
+    inquirer.prompt([
         ...Arr,
         {
             type: 'input',
             name: 'officeNumber',
             message: 'What is the Manangers office number?'
-        }
+        },
     ])
 };
 
 const promptEngineer = () => {
-    return inquirer.prompt([
+    inquirer.prompt([
         ...Arr,
         {
             type: 'input',
             name: 'github',
             message: 'What is the Engineers github account?'
-        }
+        },
     ])
 };
 
 const promptIntern = () => {
-    return inquirer.prompt([
+    inquirer.prompt([
         ...Arr,
         {
             type: 'input',
             name: 'school',
             message: 'What school does the Intern attend?'
-        }
+        },
     ])
+    .then( again => {
+        askAgain();
+    })
 };
 
+const askAgain = () => {
+    inquirer.prompt([
+    {
+        type: 'confirm',
+        name: 'addAnother',
+        message: 'Would you like to add another employee?'
+    },
+    ])
+    .then((question) => { console.log('sdfsdf');
+    if (question.addAnother === true) {
+        return promptRole()
+    }
+    return false;
+    });
+};
+   
 promptRole()
-    .then(promptManager)
-    .then(promptEngineer)
-    .then(promptIntern)
+    .then(data => {
+        switch(data.role) {
+            case 'Manager':
+            promptManager();
+            break;
+            case 'Engineer':
+            promptEngineer();
+            break;
+            case 'Intern':
+            promptIntern()
+            break;
+            default:
+            askAgain();
+        }
+    });
