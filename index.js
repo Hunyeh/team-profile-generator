@@ -1,24 +1,17 @@
 const inquirer = require('inquirer');
-const Employee = require('./lib/Employee');
+const fs = require('fs');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
-const writeFile = require('./src/generate-site');
+const htmlBody = require('./src/page-template');
+const managerCard = require('./src/manager-card');
+const engineerCard = require('./src/engineer-card');
+const internCard = require('./src/intern-card');
 
 // array of the team data 
 const teamData = [];
 
-const promptRole = () => {
-    return inquirer.prompt([
-        {
-            type: 'list',
-            name: 'role',
-            message: "Select the role you'd like to add?",
-            choices: ['Manager', 'Engineer', 'Intern', 'none']
-        }
-    ])
-};
-
+// array of questions asked for every employee
 const Arr = [
     {
         type: 'input',
@@ -44,7 +37,7 @@ const Arr = [
                 console.log('Please enter your ID!');
                 return false;
             }
-        }    
+        }
     },
     {
         type: 'input',
@@ -57,57 +50,82 @@ const Arr = [
                 console.log('Please enter your email!');
                 return false;
             }
-        } 
+        }
     }
 ];
 
+// question prompt for the manager
 const promptManager = () => {
-    inquirer.prompt([
-        ...Arr,
-        {
-            type: 'input',
-            name: 'officeNumber',
-            message: 'What is the Manangers office number?',
-            validate: officeInput => {
-                if (officeInput) {
-                    return true;
-                } else {
-                    console.log('Please enter your office number!');
-                    return false;
-                }
-            } 
-        },
-    ])
-    .then( again => {
-        askAgain();
-    })
+    const managerArr = [...Arr,
+    {
+        type: 'input',
+        name: 'officeNumber',
+        message: 'What is the Manangers office number?',
+        validate: officeInput => {
+            if (officeInput) {
+                return true;
+            } else {
+                console.log('Please enter your office number!');
+                return false;
+            }
+        }
+    }]
+    return inquirer.prompt(managerArr)
 };
 
+// prompts user to choose what employee they would like to add after the manager
+const promptRole = () => {
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'role',
+            message: "Select the role you'd like to add?",
+            choices: ['Engineer', 'Intern', 'none']
+        }
+    ])
+    // switch stement depending on which role is chosen
+    .then(data => {
+        switch (data.role) {
+            case 'Engineer':
+                promptEngineer();
+                break;
+            case 'Intern':
+                promptIntern()
+                break;
+            default:
+                generateTeam();
+        }
+    });
+};
+
+// question prompt for the engineer 
 const promptEngineer = () => {
-    inquirer.prompt([
-        ...Arr,
-        {
-            type: 'input',
-            name: 'github',
-            message: 'What is the Engineers github account?',
-            validate: githubInput => {
-                if (githubInput) {
-                    return true;
-                } else {
-                    console.log('Please enter your github username!');
-                    return false;
-                }
-            } 
-        },
-    ])
-    .then( again => {
+    const engineerArr = [...Arr,
+    {
+        type: 'input',
+        name: 'github',
+        message: 'What is the Engineers github account?',
+        validate: githubInput => {
+            if (githubInput) {
+                return true;
+            } else {
+                console.log('Please enter your github username!');
+                return false;
+            }
+        }
+    }]
+    inquirer.prompt(engineerArr)
+    .then(engineerData => {
+        let { name, id, email, github } = engineerData;
+        const engineer = new Engineer (name, id, email, github);
+        teamData.push(engineer);
         askAgain();
-    })
+    });
 };
 
+//  question prompt for the intern
 const promptIntern = () => {
-    inquirer.prompt([
-        ...Arr,
+    inquirer.prompt([...Arr,
         {
             type: 'input',
             name: 'school',
@@ -119,43 +137,67 @@ const promptIntern = () => {
                     console.log('Please enter your school!');
                     return false;
                 }
-            } 
-        },
+            }
+        }
     ])
-    .then( again => {
+    // pushing intern data to the teamData array
+    .then(internData => {
+        let { name, id, email, school } = internData;
+        const intern = new Intern(name, id, email, school);
+        teamData.push(intern)
         askAgain();
     })
 };
 
+// function asking the user if they would like to add another employee
 const askAgain = () => {
     inquirer.prompt([
-    {
-        type: 'confirm',
-        name: 'addAnother',
-        message: 'Would you like to add another employee?'
-    },
+        {
+            type: 'confirm',
+            name: 'addAnother',
+            message: 'Would you like to add another employee?'
+        }
     ])
-    .then((question) => { 
-    if (question.addAnother === true) {
-        return promptRole()
-    }
-    return false;
-    });
-};
-   
-promptRole()
-    .then(data => {
-        switch(data.role) {
-            case 'Manager':
-            promptManager();
-            break;
-            case 'Engineer':
-            promptEngineer();
-            break;
-            case 'Intern':
-            promptIntern()
-            break;
-            default:
-            askAgain();
+    .then((question) => {
+        // if the answer is true "yes" then return to the promt role function
+        if (question.addAnother === true) {
+            promptRole();
+        }
+        // if not generate the team
+        else {
+            generateTeam();
         }
     });
+};
+
+// generates entire team to display
+const generateTeam = () => {
+    console.log(teamData);
+    let card = "";
+    // looping through the created team members
+    for (let i = 0; i < teamData.length; i++) {
+        if (teamData[i].getRole() === 'Manager') {
+            card = card + managerCard(teamData[i]);
+        }
+        else if (teamData[i].getRole() === 'Engineer') {
+            card = card + engineerCard(teamData[i]);
+        }
+        else {
+            card = card + internCard(teamData[i]);
+        }
+    }
+    // generates the HTML file
+    fs.writeFileSync('./dist/index.html', htmlBody(card));
+};
+
+// call to start the application
+promptManager()
+    .then(managerData => {
+        let { name, id, email, officeNumber } = managerData;
+        const manager = new Manager (name, id, email, officeNumber);
+        teamData.push(manager);
+        askAgain();
+    })
+    .catch(err => {
+    console.log(err);
+});

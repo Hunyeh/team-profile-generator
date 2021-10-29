@@ -1,44 +1,29 @@
-const generateEmployee = aboutInfo => {
-    return `
-    <section class="my-3" id="about">
-        <h2 class="text-dark bg-primary p-2 display-inline-block">About Me</h2>
-        <p>${aboutText}</p>
-    </section>
-    `;
+// generating the html layout
+const htmlBody = card => {
+  return `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link rel="stylesheet" href="./style.css">
+      <title>Document</title>
+  </head>
+  <body>
+      <div class="jumbotron text-center">
+          <h1>My Team</h1>
+      </div>
+      <div class="container">
+          <div class="row">
+          ${card}
+          </div>
+    </div>
+</body>
+</html>
+    `
 };
 
-module.exports = templateData => {
-    // destructure page data by section
-    const { projects, about, ...header } = templateData;
-  
-    return `
-      <!DOCTYPE html>
-      <html lang="en">
-    
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Portfolio Demo</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-        <link href="https://fonts.googleapis.com/css?family=Public+Sans:300i,300,500&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
-      </head>
-    
-      <body>
-        <header>
-          <div class="container flex-row justify-space-between align-center py-3">
-            <h1 class="page-title text-secondary bg-dark py-2 px-3">    </h1>
-            <nav class="flex-row">
-              <p class="ml-2 my-1 px-2 py-1 bg-secondary text-dark">   </p>
-            </nav>
-          </div>
-        </header>
-        <main class="container my-5">
-              ${generateAbout(about)}
-              ${generateProjects(projects)}
-        </main>
-      </body>
-      </html>
-    `;
-};
+module.exports = htmlBody;
