@@ -1,5 +1,12 @@
 const inquirer = require('inquirer');
+const Employee = require('./lib/Employee');
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+const writeFile = require('./src/generate-site');
 
+// array of the team data 
+const teamData = [];
 
 const promptRole = () => {
     return inquirer.prompt([
@@ -16,17 +23,41 @@ const Arr = [
     {
         type: 'input',
         name: 'name',
-        message: 'Whats the name of the employee you would like to add?'
+        message: 'Whats the name of the employee you would like to add?',
+        validate: nameInput => {
+            if (nameInput) {
+                return true;
+            } else {
+                console.log('Please enter your name!');
+                return false;
+            }
+        }
     },
     {
         type: 'input',
         name: 'id',
-        message: 'What is the employees ID number?'
+        message: 'What is the employees ID number?',
+        validate: idInput => {
+            if (idInput) {
+                return true;
+            } else {
+                console.log('Please enter your ID!');
+                return false;
+            }
+        }    
     },
     {
         type: 'input',
         name: 'email',
-        message: 'What is the employees email address?'
+        message: 'What is the employees email address?',
+        validate: emailInput => {
+            if (emailInput) {
+                return true;
+            } else {
+                console.log('Please enter your email!');
+                return false;
+            }
+        } 
     }
 ];
 
@@ -36,9 +67,20 @@ const promptManager = () => {
         {
             type: 'input',
             name: 'officeNumber',
-            message: 'What is the Manangers office number?'
+            message: 'What is the Manangers office number?',
+            validate: officeInput => {
+                if (officeInput) {
+                    return true;
+                } else {
+                    console.log('Please enter your office number!');
+                    return false;
+                }
+            } 
         },
     ])
+    .then( again => {
+        askAgain();
+    })
 };
 
 const promptEngineer = () => {
@@ -47,9 +89,20 @@ const promptEngineer = () => {
         {
             type: 'input',
             name: 'github',
-            message: 'What is the Engineers github account?'
+            message: 'What is the Engineers github account?',
+            validate: githubInput => {
+                if (githubInput) {
+                    return true;
+                } else {
+                    console.log('Please enter your github username!');
+                    return false;
+                }
+            } 
         },
     ])
+    .then( again => {
+        askAgain();
+    })
 };
 
 const promptIntern = () => {
@@ -58,7 +111,15 @@ const promptIntern = () => {
         {
             type: 'input',
             name: 'school',
-            message: 'What school does the Intern attend?'
+            message: 'What school does the Intern attend?',
+            validate: schoolInput => {
+                if (schoolInput) {
+                    return true;
+                } else {
+                    console.log('Please enter your school!');
+                    return false;
+                }
+            } 
         },
     ])
     .then( again => {
@@ -74,7 +135,7 @@ const askAgain = () => {
         message: 'Would you like to add another employee?'
     },
     ])
-    .then((question) => { console.log('sdfsdf');
+    .then((question) => { 
     if (question.addAnother === true) {
         return promptRole()
     }
