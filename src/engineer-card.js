@@ -9,7 +9,7 @@ const engineerCard = employee => {
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">ID: ${employee.id}</li>
-          <li class="list-group-item">Email: ${employee.email}</li>
+          <a class="list-group-item" href="mailto:">Email: ${employee.email}</a>
           <a class="list-group-item" href="https://github.com/${employee.github}">Github: ${employee.github}</a>
         </ul>
       </div>

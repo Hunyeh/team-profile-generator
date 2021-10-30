@@ -80,7 +80,7 @@ const promptRole = () => {
             type: 'list',
             name: 'role',
             message: "Select the role you'd like to add?",
-            choices: ['Engineer', 'Intern', 'none']
+            choices: ['Engineer', 'Intern', 'Finished']
         }
     ])
     // switch stement depending on which role is chosen

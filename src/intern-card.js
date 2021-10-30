@@ -9,12 +9,12 @@ const internCard = employee => {
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">ID: ${employee.id}</li>
-          <li class="list-group-item">Email: ${employee.email}</li>
+          <a class="list-group-item" href="mailto:">Email: ${employee.email}</a>
           <li class="list-group-item">School: ${employee.school}</li>
         </ul>
       </div>
 </div>
     `
-}
+};
 
 module.exports = internCard;
