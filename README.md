@@ -8,7 +8,6 @@ Allows the user to generate a a file displaying their team data using only the c
 Go to my github account and clone my repo to your local computer.
 
 ## Usage
-Simply follow the command line questions after entering "node index".
 <!-- ![alt text](images/Capture.JPG) -->
 
 ## License
