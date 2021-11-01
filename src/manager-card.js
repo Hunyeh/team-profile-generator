@@ -3,7 +3,7 @@ const managerCard = employee => {
     return `
     <div class="col">
     <div class="card p-2 mt-4" style="width: 18rem;">
-        <div class="card-body">
+        <div class="card-body bg-danger">
           <h5 class="card-title">${employee.name}</h5>
           <p class="card-text"><i class="fas fa-mug-hot"></i> ${employee.getRole()}</p>
         </div>

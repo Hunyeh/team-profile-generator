@@ -13,8 +13,8 @@ const htmlBody = card => {
       <title>Document</title>
   </head>
   <body>
-      <div class="jumbotron text-center">
-          <h1>My Team</h1>
+      <div class="jumbotron text-center bg-success">
+          <h1 class="text-white">My Team</h1>
       </div>
       <div class="container">
           <div class="row">
