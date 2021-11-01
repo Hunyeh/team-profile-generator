@@ -8,7 +8,7 @@ Allows the user to generate a a file displaying their team data using only the c
 Go to my github account and clone my repo to your local computer.
 
 ## Usage
-<!-- ![alt text](images/Capture.JPG) -->
+![alt text](images/Capture.JPG)
 
 ## License
   GNU GPL v3
@@ -17,7 +17,7 @@ Go to my github account and clone my repo to your local computer.
 Yes
 
 ## Video
-[(https://drive.google.com/file/d/1xU_uLDpjQr4hmswfHnKpwqgv5wIFd42E/view?usp=sharing)]
+https://drive.google.com/file/d/1xU_uLDpjQr4hmswfHnKpwqgv5wIFd42E/view?usp=sharing
 
 ## Questions
 undefined
